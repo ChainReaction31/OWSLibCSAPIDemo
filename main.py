@@ -6,10 +6,13 @@ from owslib.util import Authentication
 import matplotlib.pyplot as plt
 
 server_url = 'http://34.67.197.57:8585/sensorhub/api'
+local_server_url = 'http://localhost:8585/sensorhub/api'
 auth = Authentication('auto_test', 'automated_tester24')
+local_auth = Authentication('admin', 'admin')
 json_headers = {'Content-Type': 'application/json'}
 obs_api = Observations(server_url, auth=auth, headers=json_headers)
 weather_datastream_id = 'fbmjp5um2cd7u'
+local_weather_datastream_id = 'e84l3n755576m'
 
 
 def main():
@@ -33,7 +36,7 @@ def main():
         plt.xlabel('Time')
         plt.xticks(rotation=-45)
         plt.show()
-        time.sleep(5)
+        time.sleep(2)
 
 
 def fetch_observations():
