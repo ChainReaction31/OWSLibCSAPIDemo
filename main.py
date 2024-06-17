@@ -69,15 +69,19 @@ def fetch_observations(datastream_id):
 
 
 def update_plot():
+    global temperature_data, timestamp_data
     current_time = dt.datetime.now()
     resp = fetch_observations(weather_datastream_id)
     t_result = resp['result']['temperature']
     time_result = resp['resultTime'].split('T')[1].split('Z')[0]
     temperature_data.append(t_result)
     timestamp_data.append(time_result)
-    if len(temperature_data) > 25 & len(timestamp_data) > 25:
-        temperature_data.pop(0)
-        timestamp_data.pop(0)
+    # if len(temperature_data) > 25 & len(timestamp_data) > 25:
+    #     temperature_data.pop(0)
+    #     timestamp_data.pop(0)
+
+    temperature_data = temperature_data[-25:]
+    timestamp_data = timestamp_data[-25:]
 
     ax.clear()
     ax.plot(timestamp_data, temperature_data)
