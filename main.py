@@ -30,8 +30,6 @@ def main():
     root = tk.Tk()
     root.title('Weather & Gyroscope Data')
     root.geometry('1920x1080')
-    # label = tk.Label(root, text='Weather Data')
-    # label.pack()
 
     temperature_data = []
     timestamp_data = []
@@ -46,18 +44,6 @@ def main():
     canvas.draw()
     canvas.get_tk_widget().pack()
 
-    # Gyro Loop
-    # fig2, ax2 = plt.subplots()
-    # canvas2 = FigureCanvasTkAgg(fig2, master=root)
-    # canvas2.draw()
-    # canvas2.get_tk_widget().pack()
-    #
-    # # Accelerometer Loop
-    # fig3, ax3 = plt.subplots()
-    # canvas3 = FigureCanvasTkAgg(fig3, master=root)
-    # canvas3.draw()
-    # canvas3.get_tk_widget().pack()
-
     root.after(2000, update_plot)
     root.after(2000, lambda: update_gyro_plot(plt, ax2, canvas, ax3, canvas))
     root.mainloop()
@@ -70,15 +56,11 @@ def fetch_observations(datastream_id):
 
 def update_plot():
     global temperature_data, timestamp_data
-    current_time = dt.datetime.now()
     resp = fetch_observations(weather_datastream_id)
     t_result = resp['result']['temperature']
     time_result = resp['resultTime'].split('T')[1].split('Z')[0]
     temperature_data.append(t_result)
     timestamp_data.append(time_result)
-    # if len(temperature_data) > 25 & len(timestamp_data) > 25:
-    #     temperature_data.pop(0)
-    #     timestamp_data.pop(0)
 
     temperature_data = temperature_data[-25:]
     timestamp_data = timestamp_data[-25:]
